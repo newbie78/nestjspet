@@ -7,7 +7,7 @@ import { CovidModule } from './covid/covid.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env',
+      envFilePath: `${process.env.NODE_ENV}.env`,
     }),
     CovidModule,
   ],
