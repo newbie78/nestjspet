@@ -12,7 +12,8 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+// import { CreateUserDto } from './dto/create-user.dto';
+import { User, CreateUserBodyDTO } from '../models/user.model';
 import { PaggingDto } from '../common/dto/pagging.dto';
 // import { User } from './schemas/user.schema';
 
@@ -25,8 +26,9 @@ export class UsersController {
   @ApiResponse({ status: 200 })
   @HttpCode(200)
   @Post()
-  async create(@Body() dto: CreateUserDto) {
-    await this.service.create(dto);
+  async create(@Body() dto: CreateUserBodyDTO) {
+    const userToCreate = new User(dto);
+    return await this.service.create(userToCreate);
   }
 
   @ApiOperation({ summary: 'Список пользователей' })

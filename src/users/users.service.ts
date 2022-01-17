@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateUserDto } from './dto/create-user.dto';
-import { User, UserDocument } from './schemas/user.schema';
+
 import { getFindList } from '../common';
+import { User, UserDocument } from '../models/user.model';
 
 @Injectable()
 export class UsersService {
@@ -11,15 +11,31 @@ export class UsersService {
     @InjectModel(User.name) private readonly model: Model<UserDocument>,
   ) {}
 
-  async create(dto: CreateUserDto): Promise<User> {
-    const created = await this.model.create(dto);
-    return created;
+  async create(dbo: User): Promise<User> {
+    const record = await this.model.create(dbo);
+    if (record) {
+      return new User(record.toJSON());
+    }
+  }
+
+  async findById(_id: number): Promise<User> {
+    const record = await this.model.findOne({ _id }).exec();
+    if (record) {
+      return new User(record.toJSON());
+    }
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    const record = await this.model.findOne({ email }).exec();
+    if (record) {
+      return new User(record.toJSON());
+    }
   }
 
   async findAll(page = 1, limit = 10) {
     const queryObject = {};
     const querySort = { _id: -1 };
-    const presenter = (el) => {
+    const presenter = (el: User) => {
       const { _id: userId, name, email } = el;
       return {
         userId,
