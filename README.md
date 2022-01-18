@@ -1,41 +1,12 @@
 ## Start with docker
-- download all files in ./server folder
-- create project.yml for docker-compose
-```
-version: '3'
-
-networks:
-  proxy_network:
-    external: true
-  mongo_network:
-    external: true
-
-services:
-  nestjs_server:
-    image: newbie39/project-nestjs
-    user: "${UID}:${GID}"
-    command: yarn start:dev
-    # command: pm2-runtime pm2.json
-    volumes:
-      - ./server:/home/node/app
-    working_dir: /home/node/app
-    networks:
-      - proxy_network
-      - mongo_network
-      - default
-  nestjs_redis:
-    image: redis:6.0.16-alpine
-    ports:
-      - 6379:6379
-    networks:
-      - default
-```
-- use nestjs_server service in any webserver
+- clone project
+- start from project folder ./infra && docker-compose -f project.yml -p nestjs_s up -d
+- use nestjs_server service for api and mexpress for mongoui in any webserver
 ## Start with host system
-- use node 14.18.2
-- use redis 6.0.16
-- use mongo 4.2-bionic
-- download all files in ./server folder
+- use node 16.13.x
+- use redis 6.2.x
+- use mongo 5.0-focal
+- clone project
 - to install type in terminal: yarn install
 - to start prj type in terminal: yarn start:dev
 

@@ -1,0 +1,46 @@
+version: '3'
+
+networks:
+  proxy_network:
+    external: true
+
+services:
+  nestjs_server:
+    image: newbie39/project-nestjs
+    user: "${UID}:${GID}"
+    command: yarn start:dev
+    # command: pm2-runtime pm2.json
+    volumes:
+      - ../:/home/node/app
+    working_dir: /home/node/app
+    networks:
+      - proxy_network
+      - default
+  nestjs_redis:
+    image: redis:6.2-alpine3.15
+    ports:
+      - 6379:6379
+    networks:
+      - default
+  mexpress:
+    container_name: mexpress
+    image: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: changeme
+    networks:
+      - proxy_network
+      - default
+  mongo:
+    container_name: mongo
+    image: mongo:5.0-focal
+    # image: mongo:4.2-bionic
+    user: "${UID}:${GID}"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: changeme
+    volumes:
+      - ./data:/data/db
+      - ./mongod.conf:/etc/mongod.conf
+    networks:
+      - default

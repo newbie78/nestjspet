@@ -1,4 +1,5 @@
 *.env
+/infra/data/*
 
 # compiled output
 /dist
