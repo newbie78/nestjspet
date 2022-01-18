@@ -1,8 +1,10 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+
+import { LoggedInGuard } from '@app/guards/logged-in.guard';
+import { AdminGuard } from '@app/guards/admin.guard';
+
 import { AppService } from './app.service';
-import { LoggedInGuard } from './logged-in.guard';
-import { AdminGuard } from './admin.guard';
 
 @ApiTags('По умолчанию')
 @Controller()

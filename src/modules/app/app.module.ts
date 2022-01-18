@@ -9,15 +9,16 @@ import * as RedisStore from 'connect-redis';
 import * as session from 'express-session';
 import * as passport from 'passport';
 import { RedisClient } from 'redis';
+import { MongooseModule } from '@nestjs/mongoose';
+
+import { CovidModule } from '@app/modules/covid/covid.module';
+import { UsersModule } from '@app/modules/users/users.module';
+import { AuthModule } from '@app/modules/auth/auth.module';
+import { RedisModule } from '@app/modules/redis/redis.module';
+import { REDIS } from '@app/modules/redis/redis.constants';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CovidModule } from './covid/covid.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
-import { RedisModule } from './redis/redis.module';
-import { REDIS } from './redis/redis.constants';
 
 @Module({
   imports: [

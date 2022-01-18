@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-// import covidApi from 'covid19-api';
 const covidApi = require('covid19-api');
 import { Injectable } from '@nestjs/common';
+
 import { getByCountryNameDto } from './dto/getByCountryName.dto';
 
 const COUNTRIES_LIST = `

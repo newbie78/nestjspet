@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { getFindList } from '../common';
-import { User, UserDocument } from '../models/user.model';
+import { getFindList } from '@app/common';
+import { User, UserDocument } from '@app/models/user.model';
 
 @Injectable()
 export class UsersService {

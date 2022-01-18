@@ -1,12 +1,13 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { LocalGuard } from '../local.guard';
-import { AuthService } from './auth.service';
+import { LocalGuard } from '@app/guards/local.guard';
 import {
   RegistrationUserBodyDTO,
   LoginUserBodyDTO,
-} from '../models/user.model';
+} from '@app/models/user.model';
+
+import { AuthService } from './auth.service';
 
 @ApiTags('Авторизация')
 @Controller('auth')

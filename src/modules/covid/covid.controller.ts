@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+
 import { CovidService } from './covid.service';
 import { getByCountryNameDto } from './dto/getByCountryName.dto';
 

@@ -11,11 +11,11 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+
+import { User, CreateUserBodyDTO } from '@app/models/user.model';
+import { PaggingDto } from '@app/common/dto/pagging.dto';
+
 import { UsersService } from './users.service';
-// import { CreateUserDto } from './dto/create-user.dto';
-import { User, CreateUserBodyDTO } from '../models/user.model';
-import { PaggingDto } from '../common/dto/pagging.dto';
-// import { User } from './schemas/user.schema';
 
 @ApiTags('Пользователи')
 @Controller('users')

@@ -5,12 +5,12 @@ import {
 } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
 
-import { UsersService } from '../users/users.service';
+import { UsersService } from '@app/modules/users/users.service';
 import {
   User,
   RegistrationUserBodyDTO,
   LoginUserBodyDTO,
-} from '../models/user.model';
+} from '@app/models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +18,11 @@ export class AuthService {
 
   async validateUser(user: LoginUserBodyDTO) {
     const foundUser = await this.usersService.findByEmail(user.email);
-    if (!user || !(await compare(user.password, foundUser.password))) {
+    if (
+      !foundUser ||
+      !user ||
+      !(await compare(user.password, foundUser.password))
+    ) {
       throw new UnauthorizedException('Incorrect username or password');
     }
     const { password: _password, ...retUser } = foundUser;
