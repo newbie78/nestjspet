@@ -6,13 +6,13 @@ import { getByCountryNameDto } from './dto/getByCountryName.dto';
 import { Roles, Role } from '@app/guards/roles.decorator';
 
 @ApiTags('Covid-19')
+@Roles(Role.Admin, Role.User)
 @Controller('covid')
 export class CovidController {
   constructor(private readonly covidService: CovidService) {}
 
   @ApiOperation({ summary: 'Список поддерживаемых стран' })
   @ApiResponse({ status: 200 })
-  @Roles(Role.Admin, Role.User)
   @Get('countries')
   countryList(): string[] {
     return this.covidService.countryList();
@@ -20,7 +20,6 @@ export class CovidController {
 
   @ApiOperation({ summary: 'Текстовая инофрмация по стране' })
   @ApiResponse({ status: 200 })
-  @Roles(Role.Admin, Role.User)
   @Post()
   async getByCountryName(@Body() dto: getByCountryNameDto) {
     return this.covidService.getByCountryName(dto);
