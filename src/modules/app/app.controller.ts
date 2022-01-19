@@ -2,7 +2,7 @@ import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { LoggedInGuard } from '@app/guards/logged-in.guard';
-import { AdminGuard } from '@app/guards/admin.guard';
+import { Roles, Role } from '@app/guards/roles.decorator';
 
 import { AppService } from './app.service';
 
@@ -28,9 +28,17 @@ export class AppController {
 
   @ApiOperation({ summary: 'Пользователи с ролью - admin' })
   @ApiResponse({ status: 200 })
-  @UseGuards(AdminGuard)
+  @Roles(Role.Admin)
   @Get('admin')
   getAdminMessage() {
+    return this.appService.getAdminMessage();
+  }
+
+  @ApiOperation({ summary: 'Пользователи с ролью - admin и user' })
+  @ApiResponse({ status: 200 })
+  @Roles(Role.Admin, Role.User)
+  @Get('mixed')
+  getMixedMessage() {
     return this.appService.getAdminMessage();
   }
 }

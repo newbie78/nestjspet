@@ -1,3 +1,4 @@
+// import { APP_GUARD } from '@nestjs/core';
 import {
   Inject,
   Logger,
@@ -29,7 +30,14 @@ import { AppService } from './app.service';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, Logger],
+  providers: [
+    AppService,
+    Logger,
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
+  ],
 })
 export class AppModule implements NestModule {
   constructor(@Inject(REDIS) private readonly redis: RedisClient) {}

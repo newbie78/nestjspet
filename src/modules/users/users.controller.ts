@@ -14,6 +14,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { User, CreateUserBodyDTO } from '@app/models/user.model';
 import { PaggingDto } from '@app/common/dto/pagging.dto';
+import { Roles, Role } from '@app/guards/roles.decorator';
 
 import { UsersService } from './users.service';
 
@@ -25,6 +26,7 @@ export class UsersController {
   @ApiOperation({ summary: 'Регистрация пользователя' })
   @ApiResponse({ status: 200 })
   @HttpCode(200)
+  @Roles(Role.Admin)
   @Post()
   async create(@Body() dto: CreateUserBodyDTO) {
     const userToCreate = new User(dto);
@@ -34,6 +36,7 @@ export class UsersController {
   @ApiOperation({ summary: 'Список пользователей' })
   @ApiResponse({ status: 200 })
   @UsePipes(new ValidationPipe({ transform: true }))
+  @Roles(Role.Admin)
   @Get()
   async findAll(@Query() dto: PaggingDto) {
     try {

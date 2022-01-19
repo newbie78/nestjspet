@@ -3,6 +3,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { CovidService } from './covid.service';
 import { getByCountryNameDto } from './dto/getByCountryName.dto';
+import { Roles, Role } from '@app/guards/roles.decorator';
 
 @ApiTags('Covid-19')
 @Controller('covid')
@@ -11,6 +12,7 @@ export class CovidController {
 
   @ApiOperation({ summary: 'Список поддерживаемых стран' })
   @ApiResponse({ status: 200 })
+  @Roles(Role.Admin, Role.User)
   @Get('countries')
   countryList(): string[] {
     return this.covidService.countryList();
@@ -18,6 +20,7 @@ export class CovidController {
 
   @ApiOperation({ summary: 'Текстовая инофрмация по стране' })
   @ApiResponse({ status: 200 })
+  @Roles(Role.Admin, Role.User)
   @Post()
   async getByCountryName(@Body() dto: getByCountryNameDto) {
     return this.covidService.getByCountryName(dto);

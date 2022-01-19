@@ -1,13 +1,15 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from '@app/modules/app/app.module';
+import { RolesGuard } from '@app/guards/roles.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix(process.env.API_PREFIX, { exclude: ['/'] });
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalGuards(new RolesGuard(new Reflector()));
 
   const config = new DocumentBuilder()
     .setTitle('Nestjs Pet')
