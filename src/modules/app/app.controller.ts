@@ -3,13 +3,17 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { LoggedInGuard } from '@app/guards/logged-in.guard';
 import { Roles, Role } from '@app/guards/roles.decorator';
+import { CovidService } from '@app/modules/covid/covid.service';
 
 import { AppService } from './app.service';
 
 @ApiTags('По умолчанию')
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly covidService: CovidService,
+  ) {}
 
   @ApiOperation({ summary: 'Публичный роут' })
   @ApiResponse({ status: 200 })
@@ -40,5 +44,15 @@ export class AppController {
   @Get('mixed')
   getMixedMessage() {
     return this.appService.getAdminMessage();
+  }
+
+  @ApiOperation({
+    summary: 'Список поддерживаемых стран из ковид модуля в апп модуле',
+  })
+  @ApiResponse({ status: 200 })
+  @Roles(Role.Admin, Role.User)
+  @Get('countries')
+  getCountries() {
+    return this.covidService.countryList();
   }
 }

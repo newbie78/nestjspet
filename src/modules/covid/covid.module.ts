@@ -6,5 +6,6 @@ import { CovidService } from './covid.service';
 @Module({
   controllers: [CovidController],
   providers: [CovidService],
+  exports: [CovidService],
 })
 export class CovidModule {}
