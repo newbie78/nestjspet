@@ -1,3 +1,7 @@
+import * as helmet from 'helmet';
+import * as compression from 'compression';
+import rateLimit from 'express-rate-limit';
+
 import { NestFactory, Reflector } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -10,6 +14,10 @@ import { Formatter } from '@app/exceptions/formatter.exception';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(helmet());
+  app.use(compression());
+  app.use(rateLimit({ max: 1000, windowMs: 15 * 60 * 1000 }));
+
   app.setGlobalPrefix(process.env.API_PREFIX, { exclude: ['/'] });
   app.useGlobalFilters(
     new GlobalExceptionsFilter(new Logger(), new Formatter()),
