@@ -101,8 +101,7 @@
   },
   "lint-staged": {
     "*.(js|ts)": [
-      "yarn lint",
-      "git add"
+      "eslint --fix"
     ]
   }
 }
