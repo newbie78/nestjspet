@@ -13,6 +13,8 @@ import { Logger } from '@app/exceptions/logger.exception';
 import { Formatter } from '@app/exceptions/formatter.exception';
 
 async function bootstrap() {
+  const test = '';
+  console.log(test);
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
   app.use(compression());
